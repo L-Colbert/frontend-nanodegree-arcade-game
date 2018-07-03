@@ -14,17 +14,11 @@ class Entity {
         // Draw the entity on the screen, required method for game
            ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
    };
+ 
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
 
-        
 };
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-//Entity.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-//};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -36,6 +30,18 @@ class Player extends Entity {
             this.x = x;
             this.y = y;
     }
+
+    update(dt) {
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+
+        //TODO: switch statement to determine x and y coordinates of the player
+        // this.x +=
+        // this.y += 
+        this.render();
+    };
+
 };
 
 class Enemy extends Entity {
@@ -45,6 +51,18 @@ class Enemy extends Entity {
         this.x = x;
         this.y = y;
     }
+
+    update(dt) {
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        this.x += (dt) * Math.floor(Math.random() * 500);
+        if (this.x > 500) {
+            this.x = (Math.floor(Math.random())-5);
+        }
+        this.render();
+    };
+
 };
 
 
@@ -52,10 +70,13 @@ class Enemy extends Entity {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-const bug1 = new Enemy(2,60);
-const bug2 = new Enemy(2,143);
-const bug3 = new Enemy(2,225);
-const allEnemies = [bug1, bug2, bug3];
+//TODO: Create a loop that will create bugs bug[i] and push the it allEnemies array
+
+const bug1 = new Enemy(-55,60);
+const bug2 = new Enemy(-200,143);
+const bug3 = new Enemy(-20,225);
+
+const allEnemies = [bug1, bug2, bug3, ];
 
 const player = new Player(200,425);
 
