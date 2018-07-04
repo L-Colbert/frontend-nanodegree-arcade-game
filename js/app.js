@@ -35,31 +35,50 @@ class Player extends Entity {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-
-        //TODO: switch statement to determine x and y coordinates of the player
-        // this.x +=
-        // this.y += 
-        this.render();
     };
 
+    //Receives keycode user input from eventlistener 
+    //Use to determine player movement
     handleInput(direction) {
         switch(direction) {
             case "left" : 
-                this.x -= 101;
-                break;
+                //test and prevents player from moving off the left side of the canvas 
+                if ((this.x - 101) > -3) {
+                    this.x -= 101;
+                    break;
+                } else {
+                    this.x = this.x;
+                    break;
+                };
             case "up": 
-                this.y -= 83;
-                break;
+                //test and prevents player from moving off the top of the canvas             
+                if ((this.y - 83) > -33) {
+                    this.y -= 83;
+                    break;
+                } else {
+                    this.y = this.y;
+                    break;
+                };
             case "right" : 
-                this.x += 101;
-                break;
+                //test and prevents player from moving off the right side of the canvas 
+                if ((this.x + 101) < 403) {
+                    this.x += 101;
+                    break;
+                } else {
+                    this.x = this.x;
+                    break;
+                };
             case "down": 
-                this.y += 83;
-                break;
-
+                //test and prevents player from moving off the top of the canvas
+                if ((this.y + 83) < 384) {
+                    this.y += 83;
+                    break;
+                } else {
+                    this.y = this.y;
+                    break;
+                };
         };
-
-    // render();
+        // render();
     }
 };
 
@@ -108,6 +127,5 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
