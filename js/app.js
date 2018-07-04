@@ -42,6 +42,25 @@ class Player extends Entity {
         this.render();
     };
 
+    handleInput(direction) {
+        switch(direction) {
+            case "left" : 
+                this.x -= 101;
+                break;
+            case "up": 
+                this.y -= 83;
+                break;
+            case "right" : 
+                this.x += 101;
+                break;
+            case "down": 
+                this.y += 83;
+                break;
+
+        };
+
+    // render();
+    }
 };
 
 class Enemy extends Entity {
@@ -76,19 +95,19 @@ const bug1 = new Enemy(-55,60);
 const bug2 = new Enemy(-200,143);
 const bug3 = new Enemy(-20,225);
 
-const allEnemies = [bug1, bug2, bug3, ];
+const allEnemies = [bug1, bug2, bug3];
 
-const player = new Player(200,425);
+const player = new Player(200,300);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
 
-    // player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(allowedKeys[e.keyCode]);
 });
