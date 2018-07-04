@@ -94,6 +94,7 @@ class Enemy extends Entity {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
+        // TODO: check the correctness of this expression
         this.x += (dt) * Math.floor(Math.random() * 500);
         if (this.x > 500) {
             this.x = (Math.floor(Math.random())-5);
@@ -109,10 +110,10 @@ class Enemy extends Entity {
 // Place the player object in a variable called player
 
 //TODO: Create a loop that will create bugs bug[i] and push the it allEnemies array
-
-const bug1 = new Enemy(-55,60);
-const bug2 = new Enemy(-200,143);
-const bug3 = new Enemy(-20,225);
+//TODO: dynamically create bugs (bug[i] = new Enemy(Random-98, 60)) push to allEnemies
+const bug1 = new Enemy(-100,60);
+const bug2 = new Enemy(-122,143);
+const bug3 = new Enemy(-178,225);
 
 const allEnemies = [bug1, bug2, bug3];
 
