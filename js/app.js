@@ -1,12 +1,14 @@
 // Entity(either player or enemy)
 class Entity {
-    constructor(sprite,x,y){
+    constructor(sprite,x,y,width,height){
         // Variables applied to each of our instances go here,
         // we've provided once for you to get started
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
         this.sprite = sprite;        
     }
 
@@ -14,9 +16,6 @@ class Entity {
         // Draw the entity on the screen, required method for game
            ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
    };
- 
-    // Update the enemy's position, required method for game
-    // Parameter: dt, a time delta between ticks
 
 };
 
@@ -24,22 +23,34 @@ class Entity {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player extends Entity {
-        constructor(x,y) { 
-            super();
-            this.sprite = 'images/char-pink-girl.png';
-            this.x = x;
-            this.y = y;
-    }
+    constructor(x,y,height, width) { 
+        super();
+        this.sprite = 'images/char-pink-girl.png';
+        this.width = 30;
+        this.height = 55;    
+        this.x = x;
+        this.y = y;
+    };
 
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
+        
+        //detect collision between player and enemy
+        allEnemies.forEach((enemy)=> {
+          if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
+            this.x = 200;           
+            this.y = 300;
+          };
+        
+        })
+    };
 
-        //TODO: switch statement to determine x and y coordinates of the player
-        // this.x +=
-        // this.y += 
-        this.render();
+    //resets player's position after a collision
+    reset() {
+        this.x = 200;
+        this.y = 300;
     };
 
     handleInput(direction) {
@@ -58,15 +69,15 @@ class Player extends Entity {
                 break;
 
         };
-
-    // render();
     }
 };
 
 class Enemy extends Entity {
-    constructor(x,y) { 
+    constructor(x,y,width,height) { 
         super();
         this.sprite = 'images/enemy-bug.png';
+        this.width = 96;
+        this.height = 65;
         this.x = x;
         this.y = y;
     }
@@ -79,7 +90,7 @@ class Enemy extends Entity {
         if (this.x > 500) {
             this.x = (Math.floor(Math.random())-5);
         }
-        this.render();
+  //      this.render();
     };
 
 };
@@ -97,7 +108,7 @@ const bug3 = new Enemy(-20,225);
 
 const allEnemies = [bug1, bug2, bug3];
 
-const player = new Player(200,300);
+const player = new Player(200,300,60,0);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
