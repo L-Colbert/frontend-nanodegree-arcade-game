@@ -9,7 +9,8 @@ class Entity {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.sprite = sprite;        
+        this.sprite = sprite;
+        this.inPlay = true;
     }
 
    render() {
@@ -43,16 +44,17 @@ class Player extends Entity {
             this.x = 200;           
             this.y = 300;
           };
-        
-        })
-    };
+        });
 
-    //resets player's position after a collision
-    reset() {
-        this.x = 200;
-        this.y = 300;
+        /* If the game has been won(player reached the water,
+        * Game is no longer in play, used to stop the drawing of frames
+        */ 
+        if (this.y === -32) {
+                this.inPlay = false;
+                gameWon();
+        };
     };
-
+    
     //Receives keycode user input from eventlistener 
     //Use to determine player movement
     handleInput(direction) {
@@ -119,6 +121,37 @@ class Enemy extends Entity {
   //      this.render();
     };
 
+};
+
+function gameWon() {
+    (function displayModal() {
+        // Get the modal div
+        const modal = document.getElementById('win-modal');
+
+        // Get the <span> element that closes the modal
+        const spanX= document.getElementsByClassName("close")[0];
+    
+        //display winning modal
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        spanX.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            };
+        };
+
+        document.querySelector('.play-again').addEventListener('click', function(event){
+            modal.style.display = "none";
+            reset();
+        })
+    
+    })();
 };
 
 

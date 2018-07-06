@@ -57,8 +57,11 @@ var Engine = (function(global) {
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
+         * If the game is still in play(not won) then redraw another frame.
          */
-        win.requestAnimationFrame(main);
+        if (player.inPlay === true) {
+            win.requestAnimationFrame(main);
+        }
     }
 
     /* This function does some initial setup that should only occur once,
