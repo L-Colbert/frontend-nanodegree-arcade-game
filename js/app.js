@@ -12,6 +12,12 @@ class Entity {
         this.sprite = sprite;
         this.inPlay = true;
     }
+        
+    //resets entities position to coordinates passed 
+    resetEntity(x,y) {
+            this.x = x;
+            this.y = y;
+        }
 
    render() {
         // Draw the entity on the screen, required method for game
@@ -41,17 +47,16 @@ class Player extends Entity {
         //detect collision between player and enemy
         allEnemies.forEach((enemy)=> {
           if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
-            this.x = 200;           
-            this.y = 300;
+              player.resetEntity(200,300);
           };
         });
 
         /* If the game has been won(player reached the water,
         * Game is no longer in play, used to stop the drawing of frames
-        */ 
-        if (this.y === -32) {
-                this.inPlay = false;
-                gameWon();
+        */
+       if (this.y === -32) {
+           this.inPlay = false;
+            gameWon();
         };
     };
     
@@ -60,41 +65,41 @@ class Player extends Entity {
     handleInput(direction) {
         switch(direction) {
             case "left" : 
-                //test and prevents player from moving off the left side of the canvas 
-                if ((this.x - 101) > -3) {
-                    this.x -= 101;
-                    break;
-                } else {
-                    this.x = this.x;
-                    break;
-                };
+            //test and prevents player from moving off the left side of the canvas 
+            if ((this.x - 101) > -3) {
+                this.x -= 101;
+                break;
+            } else {
+                this.x = this.x;
+                break;
+            };
             case "up": 
-                //test and prevents player from moving off the top of the canvas             
-                if ((this.y - 83) > -33) {
-                    this.y -= 83;
-                    break;
-                } else {
-                    this.y = this.y;
-                    break;
-                };
+            //test and prevents player from moving off the top of the canvas             
+            if ((this.y - 83) > -33) {
+                this.y -= 83;
+                break;
+            } else {
+                this.y = this.y;
+                break;
+            };
             case "right" : 
-                //test and prevents player from moving off the right side of the canvas 
-                if ((this.x + 101) < 403) {
-                    this.x += 101;
-                    break;
-                } else {
-                    this.x = this.x;
-                    break;
-                };
+            //test and prevents player from moving off the right side of the canvas 
+            if ((this.x + 101) < 403) {
+                this.x += 101;
+                break;
+            } else {
+                this.x = this.x;
+                break;
+            };
             case "down": 
-                //test and prevents player from moving off the top of the canvas
-                if ((this.y + 83) < 384) {
-                    this.y += 83;
-                    break;
-                } else {
-                    this.y = this.y;
-                    break;
-                };
+            //test and prevents player from moving off the top of the canvas
+            if ((this.y + 83) < 384) {
+                this.y += 83;
+                break;
+            } else {
+                this.y = this.y;
+                break;
+            };
         };
     }
 };
@@ -108,7 +113,7 @@ class Enemy extends Entity {
         this.x = x;
         this.y = y;
     }
-
+    
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
@@ -118,42 +123,49 @@ class Enemy extends Entity {
         if (this.x > 500) {
             this.x = (Math.floor(Math.random())-5);
         }
-  //      this.render();
+        //      this.render();
     };
-
+    
 };
 
 function gameWon() {
     (function displayModal() {
         // Get the modal div
         const modal = document.getElementById('win-modal');
-
+        
         // Get the <span> element that closes the modal
         const spanX= document.getElementsByClassName("close")[0];
-    
+        
         //display winning modal
         modal.style.display = "block";
-
+        
         // When the user clicks on <span> (x), close the modal
         spanX.onclick = function() {
             modal.style.display = "none";
         };
-
+        
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             };
         };
-
-        document.querySelector('.play-again').addEventListener('click', function(event){
+        
+        document.querySelector('.play-again').addEventListener('click', function(event){                        
             modal.style.display = "none";
-            reset();
+            gameReset(player);
         })
-    
+        
     })();
 };
 
+//resets the game by starting the rending again and resetting the player's postition
+function gameReset(player) {
+    player.inPlay = true;
+    player.resetEntity(200,300);
+    allEnemies.forEach((enemy, index) => {enemy.resetEntity(0,(index * (index+83)))});
+    main();
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -163,12 +175,12 @@ function gameWon() {
 //TODO: dynamically create bugs (bug[i] = new Enemy(Random-98, 60)) push to allEnemies
 const bug1 = new Enemy(-100,60);
 const bug2 = new Enemy(-122,143);
-const bug3 = new Enemy(-178,225);
+const bug3 = new Enemy(-178,226);
+const win = this;
 
 const allEnemies = [bug1, bug2, bug3];
 
 const player = new Player(200,300,60,0);
-
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
