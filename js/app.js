@@ -163,7 +163,7 @@ function gameWon() {
 function gameReset(player) {
     player.inPlay = true;
     player.resetEntity(200,300);
-    allEnemies.forEach((enemy, index) => {enemy.resetEntity(0,(index * (index+83)))});
+    allEnemies.forEach((enemy, index) => {enemy.resetEntity(0,(index + 60 + (index * 83)))});
     main();
 }
 
