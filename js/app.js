@@ -38,14 +38,21 @@ class Player extends Entity {
         // which will ensure the game runs at the same speed for
         // all computers.
         
+        //checks for collision with an enemy
+        //places player at starting position if a collision occurs
         this.checkCollision();
+        this.won();
+
         /* If the game has been won(player reached the water,
         * Game is no longer in play, used to stop the drawing of frames
         */
+    };
+
+    won(){
         if (this.y === -32) {
             this.inPlay = false;
             gameWon();
-        };
+        }
     };
 
     //detect collision between player and enemy
