@@ -38,21 +38,24 @@ class Player extends Entity {
         // which will ensure the game runs at the same speed for
         // all computers.
         
-        //detect collision between player and enemy
-        allEnemies.forEach((enemy)=> {
-          if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
-              this.resetEntity();
-          };
-        });
-
+        this.checkCollision();
         /* If the game has been won(player reached the water,
         * Game is no longer in play, used to stop the drawing of frames
         */
-       if (this.y === -32) {
-           this.inPlay = false;
+        if (this.y === -32) {
+            this.inPlay = false;
             gameWon();
         };
     };
+
+    //detect collision between player and enemy
+    checkCollision() {
+        allEnemies.forEach((enemy)=> {
+            if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
+                this.resetEntity();
+            };
+        });
+    }
     
     //Receives keycode user input from eventlistener 
     //Use to determine player movement
