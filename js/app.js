@@ -1,27 +1,26 @@
 // Entity(either player or enemy)
 class Entity {
-    constructor(sprite,x,y,width,height){
+    constructor(x,y,width,height,sprite){
         // Variables applied to each of our instances go here,
-        // we've provided once for you to get started
-        // The image/sprite for our enemies, this uses
-        // a helper we've provided to easily load images
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.sprite = sprite;
+        this.sprite =sprite;
         this.inPlay = true;
+        this.origX = x;
+        this.origY = y;
     }
         
     //resets entities position to coordinates passed 
     resetEntity(x,y) {
-            this.x = x;
-            this.y = y;
+        this.x = this.origX;
+        this.y = this.origY;
         }
 
    render() {
-        // Draw the entity on the screen, required method for game
-           ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    // Draw the entity on the screen, required method for game
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
    };
 
 };
@@ -30,13 +29,8 @@ class Entity {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player extends Entity {
-    constructor(x,y,height, width) { 
-        super();
-        this.sprite = 'images/char-pink-girl.png';
-        this.width = 30;
-        this.height = 55;    
-        this.x = x;
-        this.y = y;
+    constructor(x,y,height, width, sprite) { 
+        super(x,y,height, width, sprite);
     };
 
     update(dt) {
@@ -47,7 +41,7 @@ class Player extends Entity {
         //detect collision between player and enemy
         allEnemies.forEach((enemy)=> {
           if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
-              player.resetEntity(200,300);
+              this.resetEntity();
           };
         });
 
@@ -105,25 +99,19 @@ class Player extends Entity {
 };
 
 class Enemy extends Entity {
-    constructor(x,y,width,height) { 
-        super();
-        this.sprite = 'images/enemy-bug.png';
-        this.width = 96;
-        this.height = 65;
-        this.x = x;
-        this.y = y;
+    constructor(x,y,height, width, sprite) { 
+        super(x,y,height, width, sprite);
     }
     
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        // TODO: check the correctness of this expression
-        this.x += (dt) * Math.floor(Math.random() * 500);
+        this.x +=  dt * 275;
         if (this.x > 500) {
-            this.x = (Math.floor(Math.random())-5);
+            this.x = (Math.floor(Math.random()));
+            // this.x = this.orig;
         }
-        //      this.render();
     };
     
 };
@@ -162,8 +150,8 @@ function gameWon() {
 //resets the game by starting the rending again and resetting the player's postition
 function gameReset(player) {
     player.inPlay = true;
-    player.resetEntity(200,300);
-    allEnemies.forEach((enemy, index) => {enemy.resetEntity(0,(index + 60 + (index * 83)))});
+    player.resetEntity();
+    allEnemies.forEach((enemy, index) => {enemy.resetEntity((-(100 * index) * index))});
     main();
 }
 
@@ -171,16 +159,18 @@ function gameReset(player) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-//TODO: Create a loop that will create bugs bug[i] and push the it allEnemies array
-//TODO: dynamically create bugs (bug[i] = new Enemy(Random-98, 60)) push to allEnemies
-const bug1 = new Enemy(-100,60);
-const bug2 = new Enemy(-122,143);
-const bug3 = new Enemy(-178,226);
+let allEnemies = [];
+
+for ( let x =1; x <= 2; x++) {
+    for (let i=1 ; i <=3; i++) { 
+        allEnemies[i] = new Enemy((-(100 * i) * x), ((83 * i) -23), 96, 65,'images/enemy-bug.png');
+    }
+}
+
 const win = this;
 
-const allEnemies = [bug1, bug2, bug3];
-
-const player = new Player(200,300,60,0);
+const player = new Player(200,300,30,55,'images/char-pink-girl.png');
+console.log(player.origX, player);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
