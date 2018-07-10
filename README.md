@@ -9,7 +9,10 @@ Archade game similiar to the classic Frogger arcade game. The win the game, the 
 ## Getting Started
 Open the following link in your browser.
 
+[Starts game](https://l-colbert.github.io/frontend-nanodegree-arcade-game/)
+
 ### Prerequisites
+
 In my HTML file...
 ```
     <link rel="stylesheet" href="css/style.css">
@@ -31,4 +34,5 @@ Use the keyboards arrow keyst to move the player around the board
 ## Contributing
 
 ## Acknowledgments
-![link to source of modal code](https://www.w3schools.com/howto/howto_css_modals.asp "Thanks to W3 School for the modal code")
+
+[https://www.w3schools.com/howto/howto_css_modals.asp]
