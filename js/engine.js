@@ -25,9 +25,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 505;
-    //testing purposes
     canvas.height = 606;
-    canvas.style.border= "1px solid #d3d3d3";
     
     doc.body.appendChild(canvas);
 
