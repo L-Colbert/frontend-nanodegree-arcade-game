@@ -1,6 +1,34 @@
-frontend-nanodegree-arcade-game
-===============================
+# Arcade game
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+![Screenshot of game in play](images/game-screenshot.png "Screenshot of game in play")
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Game Description
+
+Archade game similiar to the classic Frogger arcade game. The win the game, the Player must cross the road to reach the water on the top of the screen without colliding with any Enemies(Bugs) in between.  If the Player collides with any of the Enemies, it will have to start from the beginning and try again. Once reaching the water, a message will appear with the option to play the game again.
+
+## Getting Started
+Open the following link in your browser.
+
+### Prerequisites
+In my HTML file...
+```
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <script src="js/resources.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/app.js"></script>
+
+```
+
+### HOW TO PLAY
+
+Use the keyboards arrow keyst to move the player around the board
+
+
+## Authors
+* **Libby Colbert** - *Initial work* - [L-Colbert](https://github.com/L-Colbert)
+
+## Contributing
+
+## Acknowledgments
+![link to source of modal code](https://www.w3schools.com/howto/howto_css_modals.asp "Thanks to W3 School for the modal code")
