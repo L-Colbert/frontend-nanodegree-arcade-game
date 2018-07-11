@@ -1,3 +1,5 @@
+"use strict";
+
 // Entity creator(either player or enemy)
 class Entity {
     constructor(x,y,width,height,sprite){
@@ -171,7 +173,7 @@ for ( let x =1; x <= 2; x++) {
 }
 
 let player = new Player(200,300,30,55,'images/char-pink-girl.png');
-console.log(player.origX, player);
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
