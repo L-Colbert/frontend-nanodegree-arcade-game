@@ -10,26 +10,26 @@ class Entity {
         this.inPlay = true;
         this.origX = x;
         this.origY = y;
-    };
+    }
         
     //resets entity's position to coordinates passed in
     resetEntity(x,y) {
         this.x = this.origX;
         this.y = this.origY;
-        };
+        }
 
    render() {
     // Draw the entity on the screen
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
    }
 
-};
+}
 
 // Player class, extention of the Entity constructor
 class Player extends Entity {
     constructor(x,y,height, width, sprite) { 
         super(x,y,height, width, sprite);
-    };
+    }
 
     update(dt) {
         //checks for collision with an enemy
@@ -38,7 +38,7 @@ class Player extends Entity {
 
         //checks to see if the game is over(player reaches the water)
         this.won();
-    };
+    }
     
     /* If the game has been won(player reached the water,
     * Game is no longer in play, used to stop the drawing of frames
@@ -48,14 +48,14 @@ class Player extends Entity {
             this.inPlay = false;
             gameWon();
         }
-    };
+    }
 
     //detect collision between player and enemy
     checkCollision() {
         allEnemies.forEach((enemy)=> {
             if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
                 this.resetEntity();
-            };
+            }
         });
     }
     
@@ -67,41 +67,36 @@ class Player extends Entity {
             //test and prevents player from moving off the left side of the canvas 
             if ((this.x - 101) > -3) {
                 this.x -= 101;
-                break;
             } else {
                 this.x = this.x;
-                break;
-            };
+            }
+            break;
             case "up": 
             //test and prevents player from moving off the top of the canvas             
             if ((this.y - 83) > -33) {
                 this.y -= 83;
-                break;
             } else {
                 this.y = this.y;
-                break;
-            };
+            }
+            break;
             case "right" : 
             //test and prevents player from moving off the right side of the canvas 
             if ((this.x + 101) < 403) {
                 this.x += 101;
-                break;
             } else {
                 this.x = this.x;
-                break;
-            };
+            }
+            break;
             case "down": 
             //test and prevents player from moving off the top of the canvas
             if ((this.y + 83) < 384) {
                 this.y += 83;
-                break;
             } else {
                 this.y = this.y;
-                break;
-            };
-        };
+            }
+        }
     }
-};
+}
 
 //creates enemies(bugs)
 class Enemy extends Entity {
@@ -117,8 +112,8 @@ class Enemy extends Entity {
         if (this.x > 500) {
             this.x = (Math.floor(Math.random()));
         }
-    };    
-};
+    }
+}
 
 //after reaching the water(winning), a modal is displayed
 //Modal code from https://www.w3schools.com/howto/howto_css_modals.asp
@@ -142,22 +137,24 @@ function gameWon() {
         window.onclick = function(event) {
             if (event.target == MODAL) {
                 MODAL.style.display = "none";
-            };
+            }
         };
         
         document.querySelector('.play-again').addEventListener('click', function(event){                        
             MODAL.style.display = "none";
             gameReset(player);
-        })
+        });
         
     })();
-};
+}
 
 //resets the game by starting the rending again and resetting the player's/enemy's postition
 function gameReset(player) {
     player.inPlay = true;
     player.resetEntity();
-    allEnemies.forEach((enemy, index) => {enemy.resetEntity((-(100 * index) * index))});
+    allEnemies.forEach((enemy, index) => {
+        enemy.resetEntity((-(100 * index) * index))
+    });
     main();
 }
 
