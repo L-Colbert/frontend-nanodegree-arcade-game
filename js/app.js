@@ -127,7 +127,6 @@ class Enemy extends Entity {
 //after reaching the water(winning), a modal is displayed
 //Modal code from https://www.w3schools.com/howto/howto_css_modals.asp
 function gameWon() {
-    (function displayModal() {
         // Get the modal div
         const MODAL = document.getElementById('win-modal');
         
@@ -152,9 +151,7 @@ function gameWon() {
         document.querySelector('.play-again').addEventListener('click', function(event){                        
             MODAL.style.display = "none";
             gameReset(player);
-        });
-        
-    })();
+        })
 }
 
 //resets the game by starting the rending again and resetting the player's/enemy's postition
