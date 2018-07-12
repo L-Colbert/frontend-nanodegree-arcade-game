@@ -13,18 +13,18 @@ class Entity {
         this.origX = x;
         this.origY = y;
     }
-        
+    
     //resets entity's position to coordinates passed in
     resetEntity(x,y) {
         this.x = this.origX;
         this.y = this.origY;
-        }
-
-   render() {
-    // Draw the entity on the screen
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-   }
-
+    }
+    
+    render() {
+        // Draw the entity on the screen
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    
 }
 
 // Player class, extention of the Entity constructor
@@ -32,30 +32,31 @@ class Player extends Entity {
     constructor(x,y,height, width, sprite) { 
         super(x,y,height, width, sprite);
     }
-
+    
     update(dt) {
         //checks for collision with an enemy
         //places player at starting position if a collision occurs
         this.checkCollision();
-
+        
         //checks to see if the game is over(player reaches the water)
         this.won();
     }
     
     /* If the game has been won(player reached the water,
-    * Game is no longer in play, used to stop the drawing of frames
+        * Game is no longer in play, used to stop the drawing of frames
     */
-    won(){
-        if (this.y === -32) {
-            this.inPlay = false;
-            gameWon();
+   won(){
+       if (this.y === -32) {
+           this.inPlay = false;
+           gameWon();
         }
     }
-
+    
     //detect collision between player and enemy
     checkCollision() {
         allEnemies.forEach((enemy)=> {
-            if  ((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) {  
+            if (((this.x < enemy.x + enemy.width) && ( this.x + this.width > enemy.x) && (this.y < enemy.y + enemy.height) && (this.height + this.y > enemy.y)) ||  
+((this.x + this.width > enemy.x) && (this.x < enemy.x + enemy.width) && (this.y + this.height > enemy.y) && (this.y < enemy.y + enemy.height))) {
                 this.resetEntity();
             }
         });
@@ -104,15 +105,21 @@ class Player extends Entity {
 class Enemy extends Entity {
     constructor(x,y,height, width, sprite) { 
         super(x,y,height, width, sprite);
+        this.speed;
     }
     
+    //set the speed of the enemies
+    pace() {
+        this.speed = Math.random() * 555;
+        return this.speed;
+    }
+
     update(dt) {
         //Moves enemy across the screen by updating its x coordinate
-        // multiplied by the dt parameter which will ensure the game
-        //runs at the same speed forall computers.
-        this.x +=  dt * 275;
+        // multiplied by the dt and the speed of the enemy
+        this.x +=  dt * this.pace();
         if (this.x > 500) {
-            this.x = (Math.floor(Math.random()));
+            this.x = Math.random() * -200;
         }
     }
 }
@@ -168,11 +175,11 @@ let allEnemies = [];
 
 for ( let x =1; x <= 2; x++) {
     for (let i=1 ; i <=3; i++) { 
-        allEnemies[i] = new Enemy((-(100 * i) * x), ((83 * i) -23), 96, 65,'images/enemy-bug.png');
+        allEnemies[i] = new Enemy((-(100 * i) * x), ((83 * i) -23), 78, 45,'images/enemy-bug.png');
     }
 }
 
-let player = new Player(200,300,30,55,'images/char-pink-girl.png');
+let player = new Player(200,300,60,10,'images/char-pink-girl.png');
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
